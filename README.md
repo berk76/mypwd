@@ -11,10 +11,13 @@ Create file `mypwd.json` with passwords in your home directory. For example `C:\
 ```json
 {
   "postgres": {
+    "login": "john",
     "password": "myPa$$w0rd"
   },
   "mongo": {
-    "password": "mongopass"
+    "login": "john",
+    "password": "mongopass",
+    "note": "Valid until end of month"
   }
 }
 ```
@@ -22,10 +25,11 @@ Create file `mypwd.json` with passwords in your home directory. For example `C:\
 Now you can access your passwords from python code and you will never commit password anymore.
 
 ```python
-from mypwd import getpwd
+import getpwd
 
-login = "jarberan"
-password = getpwd("mongo")
+login = getpwd.get_login("mongo")
+password = getpwd.get_pwd("mongo")
+note = getpwd.get_value("mongo", "note")
 uri = f"mongodb://{login}:{password}@myserver.com/admin?retryWrites=true&w=majority"
 ```
 
