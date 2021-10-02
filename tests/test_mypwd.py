@@ -4,6 +4,7 @@ import os
 
 
 class TestMyPwd(unittest.TestCase):
+    
 
     def testMyPwd(self):
         mypwd.set_filename("mypwd_test.json")

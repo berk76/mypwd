@@ -8,12 +8,12 @@ password_key = "password"
 pwd = {}
 pwd_template = {
                     "postgres": {
-                        login_key: "john", 
-                        password_key: "myPa$$w0rd", 
+                        login_key: "john",
+                        password_key: "myPa$$w0rd",
                         "note": "Valid until end of month"
-                    }, 
+                    },
                     "mongo": {
-                        login_key: "admin", 
+                        login_key: "admin",
                         password_key: "myPa$$w0rd2"
                     }
                 }
@@ -42,7 +42,7 @@ def __get_path__() -> str:
 
 def set_filename(name: str) -> None:
     global filename
-    global pwd 
+    global pwd
     filename = name
     pwd_file = __get_path__()
 
