@@ -25,11 +25,12 @@ Create file `mypwd.json` with passwords in your home directory. For example `C:\
 Now you can access your passwords from python code and you will never commit password anymore.
 
 ```python
-import getpwd
+import mypwd
 
-login = getpwd.get_login("mongo")
-password = getpwd.get_pwd("mongo")
-note = getpwd.get_value("mongo", "note")
+login = mypwd.get_login("mongo")
+password = mypwd.get_pwd("mongo")
+note = mypwd.get_value("mongo", "note")
+
 uri = f"mongodb://{login}:{password}@myserver.com/admin?retryWrites=true&w=majority"
 ```
 

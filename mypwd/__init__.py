@@ -1,5 +1,6 @@
 import json
 import os
+from mypwd.mypwd_error import MyPwdError
 
 
 filename = "mypwd.json"
@@ -21,6 +22,10 @@ pwd_template = {
 
 def get_value(entry: str, key: str) -> str:
     global pwd
+    if entry not in pwd:
+        raise MyPwdError('Account "%s" is missing in your "%s" file.' % (entry, __get_path__()))
+    if key not in pwd[entry]:
+        raise MyPwdError('Key "%s" is missing in account "%s" in your "%s" file.' % (key, entry, __get_path__()))
     return pwd[entry][key]
 
 

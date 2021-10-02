@@ -1,0 +1,2 @@
+class MyPwdError(Exception):
+    pass
