@@ -5,25 +5,33 @@ import os
 filename = "mypwd.json"
 login_key = "login"
 password_key = "password"
-pwd_template = {"mypass":{login_key:"john", password_key:"myPa$$w0rd", "note":"Valid until end of month"}, "mypass2":{login_key:"admin", password_key:"myPa$$w0rd2"}}
 pwd = {}
-
-
-def get_login(entry: str) -> str:
-    global login_key 
-    global pwd
-    return pwd[entry][login_key]
-
-
-def get_pwd(entry: str) -> str:
-    global login_password
-    global pwd
-    return pwd[entry][password_key]
+pwd_template = {
+                    "postgres": {
+                        login_key: "john", 
+                        password_key: "myPa$$w0rd", 
+                        "note": "Valid until end of month"
+                    }, 
+                    "mongo": {
+                        login_key: "admin", 
+                        password_key: "myPa$$w0rd2"
+                    }
+                }
 
 
 def get_value(entry: str, key: str) -> str:
     global pwd
     return pwd[entry][key]
+
+
+def get_login(entry: str) -> str:
+    global login_key
+    return get_value(entry, login_key)
+
+
+def get_pwd(entry: str) -> str:
+    global login_password
+    return get_value(entry, password_key)
 
 
 def __get_path__() -> str:
