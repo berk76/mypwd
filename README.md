@@ -37,6 +37,12 @@ Installation is simple:
 pip install mypwd
 ```
 
+or
+
+```
+python setup.py install
+```
+
 ## Contribution
 
 Feel free create issue or pull request.
