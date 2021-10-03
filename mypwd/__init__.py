@@ -54,10 +54,20 @@ def set_filename(name: str) -> None:
     if os.path.exists(pwd_file):
         with open(pwd_file, "r") as f:
             pwd = json.load(f)
-    else:
-        pwd = pwd_template.copy()
-        with open(pwd_file, "w") as f:
-            json.dump(pwd, f, indent=2)
+        return
+    
+    if os.path.exists("%s.gpg" % pwd_file):
+        import subprocess
+        result = subprocess.run(['gpg', '--quiet', '--decrypt', "%s.gpg" % pwd_file], stdout=subprocess.PIPE)
+        if result.returncode == 0:
+            pwd = json.loads(result.stdout)
+        else:
+            raise MyPwdError('Unable to decrypt file "%s.gpg".' % __get_path__())
+        return
+
+    pwd = pwd_template.copy()
+    with open(pwd_file, "w") as f:
+        json.dump(pwd, f, indent=2)
 
 
 set_filename(filename)
