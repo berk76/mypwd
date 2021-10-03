@@ -20,12 +20,10 @@ pwd_template = {
 
 
 def get_value(entry: str, key: str) -> str:
-    pwd = __get_dict__()
-    if entry not in pwd:
-        raise MyPwdError('Account "%s" is missing in your "%s" file.' % (entry, __get_path__()))
-    if key not in pwd[entry]:
+    pwd = __get_entry_from_dict__(entry)
+    if key not in pwd:
         raise MyPwdError('Key "%s" is missing in account "%s" in your "%s" file.' % (key, entry, __get_path__()))
-    return pwd[entry][key]
+    return pwd[key]
 
 
 def get_login(entry: str) -> str:
@@ -44,14 +42,20 @@ def __get_path__() -> str:
     return pwd_file
 
 
-def __get_dict__() -> dict:
+def __get_entry__(d: dict, entry: str) -> dict:
+    if entry not in d:
+        raise MyPwdError('Account "%s" is missing in your "%s" file.' % (entry, __get_path__()))
+    return d[entry]
+
+
+def __get_entry_from_dict__(entry: str) -> dict:
     pwd_file = __get_path__()
 
     if os.path.exists(pwd_file):
         with open(pwd_file, "r") as f:
             pwd = json.load(f)
-        return pwd
-    
+        return __get_entry__(pwd, entry)
+
     if os.path.exists("%s.gpg" % pwd_file):
         import subprocess
         result = subprocess.run(['gpg', '--quiet', '--decrypt', "%s.gpg" % pwd_file], stdout=subprocess.PIPE)
@@ -59,9 +63,9 @@ def __get_dict__() -> dict:
             pwd = json.loads(result.stdout)
         else:
             raise MyPwdError('Unable to decrypt file "%s.gpg".' % __get_path__())
-        return pwd
+        return __get_entry__(pwd, entry)
 
     pwd = pwd_template.copy()
     with open(pwd_file, "w") as f:
         json.dump(pwd, f, indent=2)
-    return pwd
+    return __get_entry__(pwd, entry)
