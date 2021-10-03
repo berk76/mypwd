@@ -34,6 +34,17 @@ note = mypwd.get_value("mongo", "note")
 uri = f"mongodb://{login}:{password}@myserver.com/admin?retryWrites=true&w=majority"
 ```
 
+### Keep your passwords safe and encrypt mypwd.json with GPG
+
+You should store your passwords in encrypted file `mypwd.json.gpg` instead of in plain text file `mypwd.json`.
+
+1. install GPG (if you are using GitBash you probably gpg already have installed)
+1. create key-pair `gpg --gen-key`
+1. encrypt your passwords `gpg --output mypwd.json.gpg --encrypt --recipient your@email.com mypwd.json`
+1. try to decrypt it `gpg --decrypt mypwd.json.gpg`
+1. remove plain text file `rm mypwd.json`
+
+
 ## Installation
 
 Installation is simple:
