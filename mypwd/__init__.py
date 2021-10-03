@@ -6,7 +6,6 @@ from mypwd.mypwd_error import MyPwdError
 filename = "mypwd.json"
 login_key = "login"
 password_key = "password"
-pwd = {}
 pwd_template = {
                     "postgres": {
                         login_key: "john",
@@ -21,7 +20,7 @@ pwd_template = {
 
 
 def get_value(entry: str, key: str) -> str:
-    global pwd
+    pwd = __get_dict__()
     if entry not in pwd:
         raise MyPwdError('Account "%s" is missing in your "%s" file.' % (entry, __get_path__()))
     if key not in pwd[entry]:
@@ -45,16 +44,13 @@ def __get_path__() -> str:
     return pwd_file
 
 
-def set_filename(name: str) -> None:
-    global filename
-    global pwd
-    filename = name
+def __get_dict__() -> dict:
     pwd_file = __get_path__()
 
     if os.path.exists(pwd_file):
         with open(pwd_file, "r") as f:
             pwd = json.load(f)
-        return
+        return pwd
     
     if os.path.exists("%s.gpg" % pwd_file):
         import subprocess
@@ -63,11 +59,9 @@ def set_filename(name: str) -> None:
             pwd = json.loads(result.stdout)
         else:
             raise MyPwdError('Unable to decrypt file "%s.gpg".' % __get_path__())
-        return
+        return pwd
 
     pwd = pwd_template.copy()
     with open(pwd_file, "w") as f:
         json.dump(pwd, f, indent=2)
-
-
-set_filename(filename)
+    return pwd
