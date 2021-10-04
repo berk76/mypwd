@@ -22,7 +22,7 @@ Create file `mypwd.json` with passwords in your home directory. For example `C:\
 }
 ```
 
-Now you can access your passwords from python code and you will never commit password anymore.
+Now you can access your secrets from python code and you will never commit secret anymore.
 
 ```python
 import mypwd
