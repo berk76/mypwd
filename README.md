@@ -10,14 +10,15 @@ Create file `mypwd.json` with passwords in your home directory. For example `C:\
 
 ```json
 {
-  "postgres": {
-    "login": "john",
-    "password": "myPa$$w0rd"
+  "mongo-uat": {
+    "login": "appl",
+    "password": "hS78#pbTgc#J.CQL",
+    "server": "myserver-uat.com",
   },
-  "mongo": {
-    "login": "john",
-    "password": "mongopass",
-    "server": "myserver.com",
+  "mongo-dev": {
+    "login": "appl",
+    "password": "VacK>p3k3~t*c~RX",
+    "server": "myserver-dev.com",
     "note": "Valid until end of month"
   }
 }
@@ -28,7 +29,7 @@ Now you can access your secrets from python code and you will never commit secre
 ```python
 import mypwd
 
-login, password, server = mypwd.get_values("mongo", ["login", "password", "server"])
+login, password, server = mypwd.get_values("mongo-dev", ["login", "password", "server"])
 
 uri = f"mongodb://{login}:{password}@{server}/admin?retryWrites=true&w=majority"
 ```
