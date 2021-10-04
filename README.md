@@ -27,9 +27,7 @@ Now you can access your passwords from python code and you will never commit pas
 ```python
 import mypwd
 
-login = mypwd.get_login("mongo")
-password = mypwd.get_pwd("mongo")
-note = mypwd.get_value("mongo", "note")
+login, password, note = mypwd.get_values("mongo", ["login", "password", "note"])
 
 uri = f"mongodb://{login}:{password}@myserver.com/admin?retryWrites=true&w=majority"
 ```

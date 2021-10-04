@@ -19,20 +19,29 @@ pwd_template = {
                 }
 
 
-def get_value(entry: str, key: str) -> str:
+def get_values(entry: str, keys: list) -> list:
+    result = []
     pwd = __get_entry_from_dict__(entry)
-    if key not in pwd:
-        raise MyPwdError('Key "%s" is missing in account "%s" in your "%s" file.' % (key, entry, __get_path__()))
-    return pwd[key]
+    for key in keys:
+        if key not in pwd:
+            raise MyPwdError('Key "%s" is missing in account "%s" in your "%s" file.' % (key, entry, __get_path__()))
+        result.append(pwd[key])
+    return result
+
+
+def get_login_password(entry: str) -> list:
+    return get_values(entry, [login_key, password_key])
+
+
+def get_value(entry: str, key: str) -> str:
+    return get_values(entry, [key])[0]
 
 
 def get_login(entry: str) -> str:
-    global login_key
     return get_value(entry, login_key)
 
 
 def get_pwd(entry: str) -> str:
-    global login_password
     return get_value(entry, password_key)
 
 
