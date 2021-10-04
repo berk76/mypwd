@@ -17,6 +17,7 @@ Create file `mypwd.json` with passwords in your home directory. For example `C:\
   "mongo": {
     "login": "john",
     "password": "mongopass",
+    "server": "myserver.com",
     "note": "Valid until end of month"
   }
 }
@@ -27,9 +28,9 @@ Now you can access your secrets from python code and you will never commit secre
 ```python
 import mypwd
 
-login, password, note = mypwd.get_values("mongo", ["login", "password", "note"])
+login, password, server = mypwd.get_values("mongo", ["login", "password", "server"])
 
-uri = f"mongodb://{login}:{password}@myserver.com/admin?retryWrites=true&w=majority"
+uri = f"mongodb://{login}:{password}@{server}/admin?retryWrites=true&w=majority"
 ```
 
 ### Keep your passwords safe and encrypt mypwd.json with GPG
