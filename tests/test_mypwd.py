@@ -10,7 +10,7 @@ class TestMyPwd(unittest.TestCase):
         self.assertEqual("john", mypwd.get_login("postgres"))
         self.assertEqual("myPa$$w0rd", mypwd.get_pwd("postgres"))
         self.assertEqual("Valid until end of month", mypwd.get_value("postgres", "note"))
-        
+
         login, password = mypwd.get_login_password("postgres")
         self.assertEqual("john", login)
         self.assertEqual("myPa$$w0rd", password)
