@@ -35,4 +35,3 @@ def test_login_password_note():
     assert "john" == login
     assert "myPa$$w0rd" == password
     assert "Valid until end of month" == note
-

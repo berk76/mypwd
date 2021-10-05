@@ -6,7 +6,7 @@ I often forgot the passwords in my scripts and committed them to the repository.
 
 ## Usage
 
-Create file `mypwd.json` with passwords in your $HOME directory. For example `C:\Users\jarberan\mypwd.json`
+Create file `mypwd.json` with passwords in your `$HOME` directory. For example `C:\Users\jarberan\mypwd.json`
 
 ```json
 {
