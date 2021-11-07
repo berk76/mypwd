@@ -13,7 +13,7 @@ Create file `mypwd.json` with passwords in your `$HOME` directory. For example `
   "mongo-uat": {
     "login": "appl",
     "password": "hS78#pbTgc#J.CQL",
-    "server": "myserver-uat.com",
+    "server": "myserver-uat.com"
   },
   "mongo-dev": {
     "login": "appl",
