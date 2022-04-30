@@ -1,4 +1,4 @@
-from mypwd.app import main
+from mypwd.cli import main
 
 if __name__ == "__main__":
     main()
