@@ -21,6 +21,11 @@ setup(
     project_urls={
         "Bug Tracker": "https://github.com/berk76/mypwd/issues"
     },
+    entry_points={
+        'console_scripts': [
+            'mypwd = mypwd.cli:main',
+        ],
+    },
     license='GPL-3.0',
     packages=find_namespace_packages(include=['mypwd', 'mypwd.*']),
     install_requires=requirements,
