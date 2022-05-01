@@ -24,8 +24,18 @@ def check_if_gpg_is_installed() -> None:
     cmd = "gpg"
     try:
         subprocess.run([cmd, "--help"], stdout=subprocess.PIPE)
-    except:
+    except FileNotFoundError:
         print("Error: %s is not installed." % cmd)
+        exit(1)
+
+
+def validate_vault_file(pwd_file: str) -> None:
+    try:
+        with open(pwd_file, "r") as f:
+                json.load(f)
+    except json.decoder.JSONDecodeError as ex:
+        print("Error: content of %s is not valid json:" % pwd_file)
+        print("%s: line %s" % (ex.msg, ex.lineno))
         exit(1)
 
 

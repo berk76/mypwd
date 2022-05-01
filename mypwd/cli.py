@@ -38,6 +38,8 @@ def encrypt(args) -> None:
         print("File %s doesn't exist." % pwd_file)
         exit(1)
 
+    impl.validate_vault_file(pwd_file)
+
     # remove and backup old vault
     if os.path.exists(gpg_file):
         if os.path.exists(bak_file):
