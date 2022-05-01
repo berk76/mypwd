@@ -4,7 +4,7 @@ Very simple password manager for my python projects.
 
 I often forgot the passwords in my scripts and committed them to the repository. So I created a simple password manager so that it doesn't happen to me anymore.
 
-## Usage
+## 1. Usage
 
 Create file `mypwd.json` with passwords in your `$HOME` directory. For example `C:\Users\jarberan\mypwd.json`
 
@@ -34,18 +34,24 @@ login, password, server = mypwd.get_values("mongo-dev", ["login", "password", "s
 uri = f"mongodb://{login}:{password}@{server}/admin?retryWrites=true&w=majority"
 ```
 
-### Keep your passwords safe and encrypt mypwd.json with GPG
+### 1.1 Keep your passwords safe and encrypt mypwd.json with GPG
 
 You should store your passwords in encrypted file `mypwd.json.gpg` instead of in plain text file `mypwd.json`.
 
-1. install GPG (if you are using GitBash you probably have gpg already installed)
-1. create key-pair `gpg --gen-key`
-1. encrypt your passwords `gpg --output mypwd.json.gpg --encrypt --recipient your@email.com mypwd.json`
-1. try to decrypt it `gpg --decrypt mypwd.json.gpg`
-1. finally you can remove plain text file `rm mypwd.json` and mypwd will use `mypwd.json.gpg`
+1. install GPG (if you are using GitBash probably you already have gpg installed)
+1. create key-pair `gpg --gen-key` and assign it to your e-mail
 
+Now you can encrypt your `mypwd.json` with your gpg key:
+```
+mypwd encrypt -e your.email@something.com
+```
 
-## Installation
+and later on you can decrypt it back for some modification:
+```
+mypwd decrypt
+```
+
+## 2. Installation
 
 Installation is simple:
 
@@ -59,6 +65,6 @@ or
 python setup.py install
 ```
 
-## Contribution
+## 3. Contribution
 
 Feel free create issue or pull request.
