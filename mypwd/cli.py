@@ -57,7 +57,7 @@ def encrypt(args) -> None:
 
 def main():
     parser = argparse.ArgumentParser(description="MyPwd: python password manager")
-    subparsers = parser.add_subparsers()
+    subparsers = parser.add_subparsers(title="Subcommands")
 
     # decrypt
     parser_d = subparsers.add_parser('decrypt', help='Decrypt vault file')
@@ -74,3 +74,5 @@ def main():
     args = parser.parse_args()
     if "func" in args:
         args.func(args)
+    else:
+        parser.print_usage()
