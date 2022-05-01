@@ -56,6 +56,8 @@ def encrypt(args) -> None:
 
 
 def main():
+    impl.check_if_gpg_is_installed()
+
     parser = argparse.ArgumentParser(description="MyPwd: python password manager")
     subparsers = parser.add_subparsers(title="Subcommands")
 

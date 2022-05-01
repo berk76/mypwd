@@ -20,10 +20,13 @@ PWD_TEMPLATE = {
                 }
 
 
-def check_if_gpg_is_installed(args) -> None:
-    result = subprocess.run(["gpg", "--help"], stdout=subprocess.PIPE)
-    if result.returncode != 0:
-        raise MyPwdError("Error: gpg is not installed.")
+def check_if_gpg_is_installed() -> None:
+    cmd = "gpg"
+    try:
+        subprocess.run([cmd, "--help"], stdout=subprocess.PIPE)
+    except:
+        print("Error: %s is not installed." % cmd)
+        exit(1)
 
 
 def get_vault_path() -> str:
