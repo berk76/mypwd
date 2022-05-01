@@ -34,7 +34,7 @@ def validate_vault_file(pwd_file: str) -> None:
         with open(pwd_file, "r") as f:
                 json.load(f)
     except json.decoder.JSONDecodeError as ex:
-        print("Error: content of %s is not valid json:" % pwd_file)
+        print("Error: Content of %s is not valid json:" % pwd_file)
         print("%s: line %s" % (ex.msg, ex.lineno))
         exit(1)
 
