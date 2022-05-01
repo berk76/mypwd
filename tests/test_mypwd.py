@@ -6,10 +6,10 @@ import pytest
 @pytest.fixture(autouse=True, scope="module")
 def setup():
     try:
-        mypwd.filename = "mypwd_test.json"
+        mypwd.impl.FILENAME = "mypwd_test.json"
         yield mypwd
     finally:
-        os.remove(mypwd.__get_path__())
+        os.remove(mypwd.impl.get_vault_path())
 
 
 def test_login():
