@@ -8,16 +8,16 @@ FILENAME = "mypwd.json"
 LOGIN_KEY = "login"
 PASSWORD_KEY = "password"
 PWD_TEMPLATE = {
-                    "postgres": {
-                        LOGIN_KEY: "john",
-                        PASSWORD_KEY: "myPa$$w0rd",
-                        "note": "Valid until end of month"
-                    },
-                    "mongo": {
-                        LOGIN_KEY: "admin",
-                        PASSWORD_KEY: "myPa$$w0rd2"
-                    }
-                }
+    "postgres": {
+        LOGIN_KEY: "john",
+        PASSWORD_KEY: "myPa$$w0rd",
+        "note": "Valid until end of month"
+    },
+    "mongo": {
+        LOGIN_KEY: "admin",
+        PASSWORD_KEY: "myPa$$w0rd2"
+    }
+}
 
 
 def check_if_gpg_is_installed() -> None:
