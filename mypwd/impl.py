@@ -32,7 +32,7 @@ def check_if_gpg_is_installed() -> None:
 def validate_vault_file(pwd_file: str) -> None:
     try:
         with open(pwd_file, "r") as f:
-                json.load(f)
+            json.load(f)
     except json.decoder.JSONDecodeError as ex:
         print("Error: Content of %s is not valid json:" % pwd_file)
         print("%s: line %s" % (ex.msg, ex.lineno))
