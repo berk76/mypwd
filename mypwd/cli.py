@@ -47,7 +47,9 @@ def encrypt(args) -> None:
         os.rename(gpg_file, bak_file)
 
     result = subprocess.run(
-        ['gpg', '--quiet', '--armor', '--output', gpg_file, '--encrypt', "--recipient", args.email, pwd_file],
+        ['gpg', '--quiet', '--armor', '--trust-model',
+            'always', '--output', gpg_file, '--encrypt',
+            "--recipient", args.email, pwd_file],
         stdout=subprocess.PIPE
     )
     if result.returncode == 0:

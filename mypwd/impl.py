@@ -8,16 +8,16 @@ FILENAME = "mypwd.json"
 LOGIN_KEY = "login"
 PASSWORD_KEY = "password"
 PWD_TEMPLATE = {
-                    "postgres": {
-                        LOGIN_KEY: "john",
-                        PASSWORD_KEY: "myPa$$w0rd",
-                        "note": "Valid until end of month"
-                    },
-                    "mongo": {
-                        LOGIN_KEY: "admin",
-                        PASSWORD_KEY: "myPa$$w0rd2"
-                    }
-                }
+    "postgres": {
+        LOGIN_KEY: "john",
+        PASSWORD_KEY: "myPa$$w0rd",
+        "note": "Valid until end of month"
+    },
+    "mongo": {
+        LOGIN_KEY: "admin",
+        PASSWORD_KEY: "myPa$$w0rd2"
+    }
+}
 
 
 def check_if_gpg_is_installed() -> None:
@@ -32,7 +32,7 @@ def check_if_gpg_is_installed() -> None:
 def validate_vault_file(pwd_file: str) -> None:
     try:
         with open(pwd_file, "r") as f:
-                json.load(f)
+            json.load(f)
     except json.decoder.JSONDecodeError as ex:
         print("Error: Content of %s is not valid json:" % pwd_file)
         print("%s: line %s" % (ex.msg, ex.lineno))
