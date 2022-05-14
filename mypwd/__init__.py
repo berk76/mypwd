@@ -4,7 +4,12 @@ from mypwd.mypwd_error import MyPwdError
 
 def get_values(entry: str, keys: list) -> list:
     result = []
-    pwd = impl.get_entry_from_dict(entry)
+
+    vault = impl.get_vault()
+    if entry not in vault:
+        raise MyPwdError('Account "%s" is missing in your "%s" file.' % (entry, impl.get_vault_path()))
+
+    pwd = vault[entry]
     for key in keys:
         if key not in pwd:
             raise MyPwdError('Key "%s" is missing in account "%s" in your "%s" file.' % (key, entry, impl.get_vault_path()))
