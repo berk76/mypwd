@@ -4,16 +4,29 @@ from mypwd.mypwd_error import MyPwdError
 
 def get_values(entry: str, keys: list) -> list:
     result = []
+    vault_modified = False
 
     vault = impl.get_vault()
     if entry not in vault:
-        raise MyPwdError('Account "%s" is missing in your "%s" file.' % (entry, impl.get_vault_path()))
+        answer = input("%s is missing. Would you like to add it into your vault? (y/n): " % entry)
+        if answer == "y":
+            vault[entry] = dict()
+            vault_modified = True
+        else:
+            raise MyPwdError('Entry "%s" is missing in your "%s" vault.' % (entry, impl.get_vault_path()))
 
-    pwd = vault[entry]
     for key in keys:
-        if key not in pwd:
-            raise MyPwdError('Key "%s" is missing in account "%s" in your "%s" file.' % (key, entry, impl.get_vault_path()))
-        result.append(pwd[key])
+        if key not in vault[entry]:
+            # raise MyPwdError('Key "%s" is missing in account "%s" in your "%s" file.' % (key, entry, impl.get_vault_path()))
+            answer = input("%s -> %s: " % (entry, key))
+            vault[entry][key] = answer
+            vault_modified = True
+        result.append(vault[entry][key])
+
+    if vault_modified:
+        print("Saving vault...")
+        impl.save_vault(vault)
+
     return result
 
 

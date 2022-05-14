@@ -61,6 +61,11 @@ def get_vault() -> dict:
             raise MyPwdError('Unable to decrypt file "%s.gpg".' % get_vault_path())
 
     vault = PWD_TEMPLATE.copy()
+    save_vault(vault)
+    return vault
+
+
+def save_vault(vault: dict) -> None:
+    vault_file = get_vault_path()
     with open(vault_file, "w") as f:
         json.dump(vault, f, indent=2)
-    return vault
