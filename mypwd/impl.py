@@ -103,10 +103,16 @@ def save_vault(vault: dict) -> None:
 
     if ENCRYPTED:
         config = load_config()
+
+        email = None
+        use_saved_mail = None
         if CONFIG_EMAIL_KEY in config:
             email = config[CONFIG_EMAIL_KEY]
-        else:
+            use_saved_mail = input("Do you want to use %s key? (y/n): " % email)
+
+        if email is None or use_saved_mail != "y":
             email = input("Provide e-mail of your private key: ")
+
         encrypt_vault(email)
 
 
