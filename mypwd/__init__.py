@@ -6,9 +6,9 @@ def get_values(entry: str, keys: list) -> list:
     result = []
     vault_modified = False
 
-    vault = impl.get_vault()
+    vault = impl.load_vault()
     if entry not in vault:
-        answer = input("%s is missing. Would you like to add it into your vault? (y/n): " % entry)
+        answer = input("'%s' entry is missing. Would you like to add it into your vault? (y/n): " % entry)
         if answer == "y":
             vault[entry] = dict()
             vault_modified = True

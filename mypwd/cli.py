@@ -1,62 +1,13 @@
 import argparse
 import mypwd.impl as impl
-import os
-import subprocess
-from mypwd.mypwd_error import MyPwdError
 
 
 def decrypt(args) -> None:
-    print("decrypting...")
-    pwd_file = impl.get_vault_path()
-    gpg_file = "%s.gpg" % pwd_file
-
-    if os.path.exists(pwd_file):
-        print("Error: File %s already exists." % pwd_file)
-        exit(1)
-
-    if not os.path.exists(gpg_file):
-        print("Error: File %s doesn't exist." % gpg_file)
-        exit(1)
-
-    result = subprocess.run(
-        ['gpg', '--quiet', '--output', pwd_file, '--decrypt', gpg_file],
-        stdout=subprocess.PIPE
-    )
-    if result.returncode == 0:
-        print("Decrypted: %s" % pwd_file)
-    else:
-        raise MyPwdError('Unable to decrypt file "%s".' % gpg_file)
+    impl.decrypt_vault()
 
 
 def encrypt(args) -> None:
-    print("encrypting...")
-    pwd_file = impl.get_vault_path()
-    gpg_file = "%s.gpg" % pwd_file
-    bak_file = "%s.gpg.bak" % pwd_file
-
-    if not os.path.exists(pwd_file):
-        print("Error: File %s doesn't exist." % pwd_file)
-        exit(1)
-
-    impl.validate_vault_file(pwd_file)
-
-    # remove and backup old vault
-    if os.path.exists(gpg_file):
-        if os.path.exists(bak_file):
-            os.remove(bak_file)
-        os.rename(gpg_file, bak_file)
-
-    result = subprocess.run(
-        ['gpg', '--quiet', '--armor', '--trust-model',
-            'always', '--output', gpg_file, '--encrypt',
-            "--recipient", args.email, pwd_file],
-        stdout=subprocess.PIPE
-    )
-    if result.returncode == 0:
-        print("Encrypted: %s" % gpg_file)
-        os.remove(pwd_file)
-    else:
-        raise MyPwdError('Unable to encrypt file "%s".' % pwd_file)
+    impl.encrypt_vault(args.email)
 
 
 def main():
