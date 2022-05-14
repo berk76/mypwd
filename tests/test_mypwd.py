@@ -6,7 +6,7 @@ import pytest
 @pytest.fixture(autouse=True, scope="module")
 def setup():
     try:
-        mypwd.impl.FILENAME = "mypwd_test.json"
+        mypwd.impl.VAULT_FILENAME = "mypwd_test.json"
         yield mypwd
     finally:
         os.remove(mypwd.impl.get_vault_path())

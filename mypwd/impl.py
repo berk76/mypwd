@@ -4,7 +4,9 @@ import subprocess
 from mypwd.mypwd_error import MyPwdError
 
 
-FILENAME = "mypwd.json"
+CONFIG_FILENAME = "mypwd.conf"
+CONFIG_EMAIL_KEY = "email"
+VAULT_FILENAME = "mypwd.json"
 LOGIN_KEY = "login"
 PASSWORD_KEY = "password"
 PWD_TEMPLATE = {
@@ -39,10 +41,35 @@ def validate_vault_file(vault_file: str) -> None:
         exit(1)
 
 
+def get_home_dir() -> str:
+    return os.getenv("HOME") if os.getenv("HOME") is not None else os.getenv("HOMEPATH")
+
+
 def get_vault_path() -> str:
-    home_dir = os.getenv("HOME") if os.getenv("HOME") is not None else os.getenv("HOMEPATH")
-    vault_file = os.path.join(home_dir, FILENAME)
+    home_dir = get_home_dir()
+    vault_file = os.path.join(home_dir, VAULT_FILENAME)
     return vault_file
+
+
+def get_config_path() -> str:
+    home_dir = get_home_dir()
+    vault_file = os.path.join(home_dir, CONFIG_FILENAME)
+    return vault_file
+
+
+def load_config() -> dict:
+    config_file = get_config_path()
+
+    if os.path.exists(config_file):
+        with open(config_file, "r") as f:
+            return json.load(f)
+    return dict()
+
+
+def save_config(config: dict) -> None:
+    config_file = get_config_path()
+    with open(config_file, "w") as f:
+        json.dump(config, f, indent=2)
 
 
 def load_vault() -> dict:
@@ -75,7 +102,11 @@ def save_vault(vault: dict) -> None:
         json.dump(vault, f, indent=2)
 
     if ENCRYPTED:
-        email = input("Provide e-mail of your private key: ")
+        config = load_config()
+        if CONFIG_EMAIL_KEY in config:
+            email = config[CONFIG_EMAIL_KEY]
+        else:
+            email = input("Provide e-mail of your private key: ")
         encrypt_vault(email)
 
 
@@ -131,3 +162,7 @@ def encrypt_vault(email: str) -> None:
         os.remove(pwd_file)
     else:
         raise MyPwdError('Unable to encrypt file "%s".' % pwd_file)
+
+    config = load_config()
+    config[CONFIG_EMAIL_KEY] = email
+    save_config(config)
