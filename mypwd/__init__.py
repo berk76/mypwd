@@ -8,7 +8,8 @@ def get_values(entry: str, keys: list) -> list:
 
     vault = impl.load_vault()
     if entry not in vault:
-        answer = input("'%s' entry is missing. Would you like to add it into your vault? (y/n): " % entry)
+        print("Warning: '%s' entry is missing in vault: %s" % (entry, impl.get_vault_path()))
+        answer = input("Would you like to add it into your vault? (y/n): ")
         if answer == "y":
             vault[entry] = dict()
             vault_modified = True

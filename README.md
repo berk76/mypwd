@@ -56,7 +56,7 @@ Now you can encrypt your `mypwd.json` with your gpg key:
 mypwd encrypt -e your.email@something.com
 ```
 
-and later on you can decrypt it back for some modification:
+and later on you can decrypt it back for some manual modification:
 ```
 mypwd decrypt
 ```
