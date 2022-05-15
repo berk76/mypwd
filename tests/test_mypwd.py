@@ -3,10 +3,24 @@ import os
 import pytest
 
 
+PWD_TEMPLATE = {
+    "postgres": {
+        mypwd.impl.LOGIN_KEY: "john",
+        mypwd.impl.PASSWORD_KEY: "myPa$$w0rd",
+        "note": "Valid until end of month"
+    },
+    "mongo": {
+        mypwd.impl.LOGIN_KEY: "admin",
+        mypwd.impl.PASSWORD_KEY: "myPa$$w0rd2"
+    }
+}
+
+
 @pytest.fixture(autouse=True, scope="module")
 def setup():
     try:
         mypwd.impl.VAULT_FILENAME = "mypwd_test.json"
+        mypwd.impl.PWD_TEMPLATE = PWD_TEMPLATE
         yield mypwd
     finally:
         os.remove(mypwd.impl.get_vault_path())
