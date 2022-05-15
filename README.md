@@ -1,12 +1,30 @@
-# MyPwd
+# Very simple password vault for Python projects.
 
-Very simple password manager for my python projects.
-
-I often forgot the passwords in my scripts and committed them to the repository. So I created a simple password manager so that it doesn't happen to me anymore.
+I often forgot the passwords in my scripts and committed them to the repository. So I created a simple password vault so that it doesn't happen to me anymore.
 
 ## 1. Usage
 
-Create file `mypwd.json` with passwords in your `$HOME` directory. For example `C:\Users\jarberan\mypwd.json`
+### 1.1 Basic setup and usage
+
+Install `mypwd` module.
+
+```
+pip install mypwd
+```
+
+Now you can use `mypwd` your project:
+
+```python
+import mypwd
+
+login, password, server = mypwd.get_values("mongo-dev", ["login", "password", "server"])
+
+uri = f"mongodb://{login}:{password}@{server}/admin?retryWrites=true&w=majority"
+```
+
+When you run it first time `mypwd` creates vault in your `$HOME` directory and will ask you for login, password and server of your mongo-dev entry and store it in your vault `$HOME/mypwd.json`.
+
+Here is an example of vault content:
 
 ```json
 {
@@ -26,15 +44,7 @@ Create file `mypwd.json` with passwords in your `$HOME` directory. For example `
 
 Now you can access your secrets from python code and you will never commit secret anymore.
 
-```python
-import mypwd
-
-login, password, server = mypwd.get_values("mongo-dev", ["login", "password", "server"])
-
-uri = f"mongodb://{login}:{password}@{server}/admin?retryWrites=true&w=majority"
-```
-
-### 1.1 Keep your passwords safe and encrypt mypwd.json with GPG
+### 1.2 Keep your passwords safe and encrypt mypwd.json with GPG
 
 You should store your passwords in encrypted file `mypwd.json.gpg` instead of in plain text file `mypwd.json`.
 
@@ -46,7 +56,7 @@ Now you can encrypt your `mypwd.json` with your gpg key:
 mypwd encrypt -e your.email@something.com
 ```
 
-and later on you can decrypt it back for some modification:
+and later on you can decrypt it back for some manual modification:
 ```
 mypwd decrypt
 ```
