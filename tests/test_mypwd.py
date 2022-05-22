@@ -1,6 +1,7 @@
 import mypwd
 import os
 import pytest
+from pytest import MonkeyPatch
 
 
 PWD_TEMPLATE = {
@@ -15,11 +16,13 @@ PWD_TEMPLATE = {
     }
 }
 
+VAULT_FILENAME = "mypwd_test.json"
+
 
 @pytest.fixture(autouse=True, scope="module")
 def setup():
     try:
-        mypwd.impl.VAULT_FILENAME = "mypwd_test.json"
+        mypwd.impl.VAULT_FILENAME = VAULT_FILENAME
         mypwd.impl.PWD_TEMPLATE = PWD_TEMPLATE
         yield mypwd
     finally:
@@ -49,3 +52,25 @@ def test_login_password_note():
     assert "john" == login
     assert "myPa$$w0rd" == password
     assert "Valid until end of month" == note
+
+
+def test_new_entry(monkeypatch: MonkeyPatch):
+    ENTRY = "New Entry"
+    LOGIN = "mylogin"
+    PASSWORD = "mypass"
+    SERVER = "myserver"
+    inputs = ["y", LOGIN, PASSWORD, SERVER]
+
+    monkeypatch.setattr("builtins.input", lambda _: inputs.pop(0))
+
+    # Enter new values
+    login, password, server = mypwd.get_values(ENTRY, ["login", "password", "server"])
+    assert LOGIN == login
+    assert PASSWORD == password
+    assert SERVER == server
+
+    # Entry already exists
+    login, password, server = mypwd.get_values(ENTRY, ["login", "password", "server"])
+    assert LOGIN == login
+    assert PASSWORD == password
+    assert SERVER == server
