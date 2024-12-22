@@ -9,7 +9,7 @@ CONFIG_EMAIL_KEY = "email"
 VAULT_FILENAME = "mypwd.json"
 LOGIN_KEY = "login"
 PASSWORD_KEY = "password"
-PWD_TEMPLATE = dict()
+PWD_TEMPLATE:dict = dict()
 ENCRYPTED = False
 
 def check_if_gpg_is_installed() -> None:
@@ -32,7 +32,10 @@ def validate_vault_file(vault_file: str) -> None:
 
 
 def get_home_dir() -> str:
-    return os.getenv("HOME") if os.getenv("HOME") is not None else os.getenv("HOMEPATH")
+    result = os.getenv("HOME") if os.getenv("HOME") is not None else os.getenv("HOMEPATH")
+    if result is None:
+        raise MyPwdError("Unable to get HOME directory.")
+    return result
 
 
 def get_vault_path() -> str:
