@@ -3,8 +3,16 @@ name = "mypwd"
 version = "0.7.0"
 description = "Very simple password vault for Python projects"
 readme = "README.md"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Jaroslav Beran", email = "jaroslav.beran@gmail.com" }
+]
 requires-python = ">=3.6"
 dependencies = []
+
+[project.urls]
+homepage = "https://github.com/berk76/mypwd"
+repository = "https://github.com/berk76/mypwd"
 
 [dependency-groups]
 dev = [
@@ -13,3 +21,13 @@ dev = [
     "pytest>=7.0.1",
     "pytest-cov>=4.0.0",
 ]
+
+[project.scripts]
+mypwd = "mypwd.cli:main"
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["mypwd"]
