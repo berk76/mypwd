@@ -13,6 +13,7 @@ dependencies = []
 [project.urls]
 homepage = "https://github.com/berk76/mypwd"
 repository = "https://github.com/berk76/mypwd"
+Issues = "https://github.com/berk76/mypwd/issues"
 
 [dependency-groups]
 dev = [
