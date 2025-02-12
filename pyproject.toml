@@ -1,0 +1,15 @@
+[project]
+name = "mypwd"
+version = "0.7.0"
+description = "Very simple password vault for Python projects"
+readme = "README.md"
+requires-python = ">=3.6"
+dependencies = []
+
+[dependency-groups]
+dev = [
+    "flake8>=4.0.1",
+    "mypy>=0.971",
+    "pytest>=7.0.1",
+    "pytest-cov>=4.0.0",
+]
