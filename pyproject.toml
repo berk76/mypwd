@@ -11,8 +11,8 @@ requires-python = ">=3.6"
 dependencies = []
 
 [project.urls]
-homepage = "https://github.com/berk76/mypwd"
-repository = "https://github.com/berk76/mypwd"
+Homepage = "https://github.com/berk76/mypwd"
+Repository = "https://github.com/berk76/mypwd"
 Issues = "https://github.com/berk76/mypwd/issues"
 
 [dependency-groups]
