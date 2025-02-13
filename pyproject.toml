@@ -29,3 +29,11 @@ dev = [
 
 [project.scripts]
 mypwd = "mypwd.cli:main"
+
+
+[tool.hatch.build]
+exclude = [
+    ".github/*",
+    "tests/*",
+    "*.md"
+]
