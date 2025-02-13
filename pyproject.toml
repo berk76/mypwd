@@ -30,6 +30,13 @@ dev = [
 [project.scripts]
 mypwd = "mypwd.cli:main"
 
+[tool.hatch.build]
+exclude = [
+    ".github/*",
+    "tests/*",
+    "*.md"
+]
+
 [tool.ruff]
 line-length = 119
 indent-width = 4
