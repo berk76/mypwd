@@ -50,5 +50,5 @@ unfixable = ["B"]
 "**/{tests,docs,tools}/*" = ["E402"]
 
 [tool.ruff.format]
-# 5. Use single quotes in `ruff format`.
-quote-style = "single"
+# 5. Use double quotes in `ruff format`.
+quote-style = "double"
