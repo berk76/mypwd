@@ -79,7 +79,7 @@ python setup.py install
 
 Feel free create issue or pull request.
 
-Please install pre-commit
+Please install pre-commit before commiting your changes
 ```
 uv run pre-commit install
 ```
