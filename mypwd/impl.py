@@ -9,8 +9,9 @@ CONFIG_EMAIL_KEY = "email"
 VAULT_FILENAME = "mypwd.json"
 LOGIN_KEY = "login"
 PASSWORD_KEY = "password"
-PWD_TEMPLATE:dict = dict()
+PWD_TEMPLATE: dict = {}
 ENCRYPTED = False
+
 
 def check_if_gpg_is_installed() -> None:
     cmd = "gpg"
@@ -23,11 +24,11 @@ def check_if_gpg_is_installed() -> None:
 
 def validate_vault_file(vault_file: str) -> None:
     try:
-        with open(vault_file, "r") as f:
+        with open(vault_file) as f:
             json.load(f)
     except json.decoder.JSONDecodeError as ex:
         print("Error: Content of %s is not valid json:" % vault_file)
-        print("%s: line %s" % (ex.msg, ex.lineno))
+        print(f"{ex.msg}: line {ex.lineno}")
         exit(1)
 
 
@@ -54,9 +55,9 @@ def load_config() -> dict:
     config_file = get_config_path()
 
     if os.path.exists(config_file):
-        with open(config_file, "r") as f:
+        with open(config_file) as f:
             return json.load(f)
-    return dict()
+    return {}
 
 
 def save_config(config: dict) -> None:
@@ -71,12 +72,13 @@ def load_vault() -> dict:
 
     if os.path.exists(vault_file):
         ENCRYPTED = False
-        with open(vault_file, "r") as f:
+        with open(vault_file) as f:
             return json.load(f)
 
     if os.path.exists("%s.gpg" % vault_file):
         ENCRYPTED = True
         import subprocess
+
         result = subprocess.run(['gpg', '--quiet', '--decrypt', "%s.gpg" % vault_file], stdout=subprocess.PIPE)
         if result.returncode == 0:
             return json.loads(result.stdout)
@@ -122,10 +124,7 @@ def decrypt_vault() -> None:
         print("Error: File %s doesn't exist." % gpg_file)
         exit(1)
 
-    result = subprocess.run(
-        ['gpg', '--quiet', '--output', pwd_file, '--decrypt', gpg_file],
-        stdout=subprocess.PIPE
-    )
+    result = subprocess.run(['gpg', '--quiet', '--output', pwd_file, '--decrypt', gpg_file], stdout=subprocess.PIPE)
     if result.returncode == 0:
         print("Decrypted: %s" % pwd_file)
     else:
@@ -151,10 +150,20 @@ def encrypt_vault(email: str) -> None:
         os.rename(gpg_file, bak_file)
 
     result = subprocess.run(
-        ['gpg', '--quiet', '--armor', '--trust-model',
-            'always', '--output', gpg_file, '--encrypt',
-            "--recipient", email, pwd_file],
-        stdout=subprocess.PIPE
+        [
+            'gpg',
+            '--quiet',
+            '--armor',
+            '--trust-model',
+            'always',
+            '--output',
+            gpg_file,
+            '--encrypt',
+            "--recipient",
+            email,
+            pwd_file,
+        ],
+        stdout=subprocess.PIPE,
     )
     if result.returncode == 0:
         print("Encrypted: %s" % gpg_file)

@@ -29,8 +29,7 @@ def main():
     # encrypt
     parser_e = subparsers.add_parser('encrypt', help='Encrypt vault file.')
     parser_e.add_argument(
-        '-e', '--email', type=str, required=True,
-        help='Encrypt vault file with public key identified by e-mail.'
+        '-e', '--email', type=str, required=True, help='Encrypt vault file with public key identified by e-mail.'
     )
     parser_e.set_defaults(func=encrypt)
 

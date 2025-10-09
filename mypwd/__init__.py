@@ -8,18 +8,18 @@ def get_values(entry: str, keys: list) -> list:
 
     vault = impl.load_vault()
     if entry not in vault:
-        print("Warning: '%s' entry is missing in vault: %s" % (entry, impl.get_vault_path()))
+        print(f"Warning: '{entry}' entry is missing in vault: {impl.get_vault_path()}")
         answer = input("Would you like to add it into your vault? (y/n): ")
         if answer == "y":
-            vault[entry] = dict()
+            vault[entry] = {}
             vault_modified = True
         else:
-            raise MyPwdError('Entry "%s" is missing in your "%s" vault.' % (entry, impl.get_vault_path()))
+            raise MyPwdError(f'Entry "{entry}" is missing in your "{impl.get_vault_path()}" vault.')
 
     for key in keys:
         if key not in vault[entry]:
             # raise MyPwdError('Key "%s" is missing in account "%s" in your "%s" file.' % (key, entry, impl.get_vault_path()))
-            answer = input("%s -> %s: " % (entry, key))
+            answer = input(f"{entry} -> {key}: ")
             vault[entry][key] = answer
             vault_modified = True
         result.append(vault[entry][key])
