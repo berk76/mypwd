@@ -78,3 +78,8 @@ python setup.py install
 ## 3. Contribution
 
 Feel free create issue or pull request.
+
+Please install pre-commit
+```
+uv run pre-commit install
+```
