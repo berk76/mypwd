@@ -7,8 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  flake8:
-    name: Lint with flake8
+  pre-commit:
+    name: Pre commit
     runs-on: ubuntu-latest
 
     steps:
@@ -26,21 +26,17 @@ jobs:
       run: |
         uv sync
 
-    - name: Lint with flake8
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        uv run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        uv run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    - name: Run pre-commit
+      # v3.0.1
+      uses: pre-commit/action@2c7b3805fd2a0fd8c1884dcaebf91fc102a13ecd
 
   pytest:
     name: Test with pytest
     runs-on: ubuntu-latest
-    needs: [flake8]
+    needs: [pre-commit]
 
     steps:
     - uses: actions/checkout@v5
-
     - name: Install uv
       uses: astral-sh/setup-uv@v6
 
@@ -56,25 +52,3 @@ jobs:
     - name: Test with pytest
       run: |
         uv run pytest
-
-  mypy:
-    name: MyPy
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v5
-    - name: Install uv
-      uses: astral-sh/setup-uv@v6
-
-    - name: Set up Python
-      uses: actions/setup-python@v6
-      with:
-        python-version: '3.x'
-
-    - name: Install dependencies
-      run: |
-        uv sync
-
-    - name: Run MyPy
-      run: |
-        uv run mypy mypwd

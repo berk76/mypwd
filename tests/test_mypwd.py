@@ -8,12 +8,9 @@ PWD_TEMPLATE = {
     "postgres": {
         mypwd.impl.LOGIN_KEY: "john",
         mypwd.impl.PASSWORD_KEY: "myPa$$w0rd",
-        "note": "Valid until end of month"
+        "note": "Valid until end of month",
     },
-    "mongo": {
-        mypwd.impl.LOGIN_KEY: "admin",
-        mypwd.impl.PASSWORD_KEY: "myPa$$w0rd2"
-    }
+    "mongo": {mypwd.impl.LOGIN_KEY: "admin", mypwd.impl.PASSWORD_KEY: "myPa$$w0rd2"},
 }
 
 VAULT_FILENAME = "mypwd_test.json"
