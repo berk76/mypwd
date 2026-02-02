@@ -6,7 +6,7 @@ from mypwd.mypwd_error import MyPwdError
 
 def get_version():
     try:
-        return importlib.metadata.metadata('mywatering-client')['Version']
+        return importlib.metadata.metadata('mypwd')['Version']
     except (importlib.metadata.PackageNotFoundError, KeyError):
         try:
             with open("pyproject.toml", "rb") as f:
