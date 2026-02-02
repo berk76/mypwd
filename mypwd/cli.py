@@ -1,5 +1,6 @@
 import argparse
 import mypwd.impl as impl
+from . import __version__
 
 
 def decrypt(args) -> None:
@@ -20,6 +21,8 @@ def main():
     impl.check_if_gpg_is_installed()
 
     parser = argparse.ArgumentParser(description="MyPwd - Python password manager")
+    parser.add_argument('--version', action='version', version=f'MyPwd version {__version__}')
+
     subparsers = parser.add_subparsers(title="Subcommands")
 
     # decrypt
