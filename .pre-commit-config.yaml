@@ -39,3 +39,8 @@ repos:
     rev: v1.18.2
     hooks:
       - id: mypy
+
+  - repo: https://github.com/tox-dev/pyproject-fmt
+    rev: "v2.15.3"
+    hooks:
+      - id: pyproject-fmt

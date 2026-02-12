@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling"]
 build-backend = "hatchling.build"
+requires = [ "hatchling" ]
 
 [project]
 name = "mypwd"
@@ -8,50 +8,40 @@ version = "0.9.1"
 description = "Very simple password vault for Python projects"
 readme = "README.md"
 license = "GPL-3.0"
-authors = [
-    { name = "Jaroslav Beran", email = "jaroslav.beran@gmail.com" }
-]
+authors = [ { name = "Jaroslav Beran", email = "jaroslav.beran@gmail.com" } ]
 requires-python = ">=3.11"
+classifiers = [
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+]
 dependencies = []
-
-[project.urls]
-Homepage = "https://github.com/berk76/mypwd"
-Repository = "https://github.com/berk76/mypwd"
-Issues = "https://github.com/berk76/mypwd/issues"
+urls.Homepage = "https://github.com/berk76/mypwd"
+urls.Issues = "https://github.com/berk76/mypwd/issues"
+urls.Repository = "https://github.com/berk76/mypwd"
+scripts.mypwd = "mypwd.cli:main"
 
 [dependency-groups]
 dev = [
-    "pre-commit>=2.1.1",
-    "pytest>=7.0.1",
-    "pytest-cov>=4.0.0",
+  "pre-commit>=2.1.1",
+  "pytest>=7.0.1",
+  "pytest-cov>=4",
 ]
 
-[project.scripts]
-mypwd = "mypwd.cli:main"
-
-[tool.hatch.build]
-exclude = [
-    ".github/*",
-    "tests/*",
-    "*.md"
-]
+[tool.hatch]
+build.exclude = [ ".github/*", "tests/*", "*.md" ]
 
 [tool.ruff]
 line-length = 119
 indent-width = 4
-
-[tool.ruff.lint]
-# Enable flake8-bugbear (`B`) rules, in addition to the defaults.
-select = ["E4", "E7", "E9", "F", "B"]
-
-# Avoid trying to fix flake8-bugbear (`B`) violations.
-unfixable = ["B"]
-
-# Ignore `E402` (import violations) in all `__init__.py` files, and in selected subdirectories.
-[tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["E402"]
-"**/{tests,docs,tools}/*" = ["E402"]
-
-[tool.ruff.format]
 # Preserve quotes in `ruff format`.
-quote-style = "preserve"
+format.quote-style = "preserve"
+# Enable flake8-bugbear (`B`) rules, in addition to the defaults.
+lint.select = [ "B", "E4", "E7", "E9", "F" ]
+lint.per-file-ignores."**/{tests,docs,tools}/*" = [ "E402" ]
+# Ignore `E402` (import violations) in all `__init__.py` files, and in selected subdirectories.
+lint.per-file-ignores."__init__.py" = [ "E402" ]
+# Avoid trying to fix flake8-bugbear (`B`) violations.
+lint.unfixable = [ "B" ]
