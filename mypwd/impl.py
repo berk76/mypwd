@@ -33,7 +33,7 @@ def validate_vault_file(vault_file: str) -> None:
 
 
 def get_home_dir() -> str:
-    result = os.getenv("HOME") if os.getenv("HOME") is not None else os.getenv("HOMEPATH")
+    result = os.getenv("HOME") if os.getenv("HOME") is not None else os.getenv("USERPROFILE")
     if result is None:
         raise MyPwdError("Unable to get HOME directory.")
     return result
