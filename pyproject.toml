@@ -4,7 +4,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "mypwd"
-version = "0.9.1"
+version = "0.9.2"
 description = "Very simple password vault for Python projects"
 readme = "README.md"
 license = "GPL-3.0"
