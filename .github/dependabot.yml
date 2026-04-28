@@ -11,6 +11,9 @@ updates:
       interval: 'weekly'
       day: 'sunday'
       time: '15:00'
+    # Cooldown new versions for security reasons
+    cooldown:
+      default-days: 7
 
   # Enable version updates for Python/Pip - Production
   - package-ecosystem: 'uv'
@@ -22,3 +25,6 @@ updates:
       interval: 'weekly'
       day: 'sunday'
       time: '15:15'
+    # Cooldown new versions for security reasons
+    cooldown:
+      default-days: 7
