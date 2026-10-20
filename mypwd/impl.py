@@ -18,7 +18,7 @@ def check_if_gpg_is_installed() -> None:
     try:
         subprocess.run([cmd, "--help"], stdout=subprocess.PIPE)
     except FileNotFoundError:
-        print("Error: %s is not installed." % cmd)
+        print(f"Error: {cmd} is not installed.")
         exit(1)
 
 
@@ -27,7 +27,7 @@ def validate_vault_file(vault_file: str) -> None:
         with open(vault_file) as f:
             json.load(f)
     except json.decoder.JSONDecodeError as ex:
-        print("Error: Content of %s is not valid json:" % vault_file)
+        print(f"Error: Content of {vault_file} is not valid json:")
         print(f"{ex.msg}: line {ex.lineno}")
         exit(1)
 
@@ -75,15 +75,15 @@ def load_vault() -> dict:
         with open(vault_file) as f:
             return json.load(f)
 
-    if os.path.exists("%s.gpg" % vault_file):
+    if os.path.exists(f"{vault_file}.gpg"):
         ENCRYPTED = True
         import subprocess
 
-        result = subprocess.run(['gpg', '--quiet', '--decrypt', "%s.gpg" % vault_file], stdout=subprocess.PIPE)
+        result = subprocess.run(['gpg', '--quiet', '--decrypt', f"{vault_file}.gpg"], stdout=subprocess.PIPE)
         if result.returncode == 0:
             return json.loads(result.stdout)
         else:
-            raise MyPwdError('Unable to decrypt file "%s.gpg".' % get_vault_path())
+            raise MyPwdError(f'Unable to decrypt file "{get_vault_path()}.gpg".')
 
     ENCRYPTED = False
     vault = PWD_TEMPLATE.copy()
@@ -103,7 +103,7 @@ def save_vault(vault: dict) -> None:
         use_saved_mail = None
         if CONFIG_EMAIL_KEY in config:
             email = config[CONFIG_EMAIL_KEY]
-            use_saved_mail = input("Do you want to use %s key? (y/n): " % email)
+            use_saved_mail = input(f"Do you want to use {email} key? (y/n): ")
 
         if email is None or use_saved_mail != "y":
             email = input("Provide e-mail of your private key: ")
@@ -114,31 +114,31 @@ def save_vault(vault: dict) -> None:
 def decrypt_vault() -> None:
     print("decrypting vault...")
     pwd_file = get_vault_path()
-    gpg_file = "%s.gpg" % pwd_file
+    gpg_file = f"{pwd_file}.gpg"
 
     if os.path.exists(pwd_file):
-        print("Error: File %s already exists." % pwd_file)
+        print(f"Error: File {pwd_file} already exists.")
         exit(1)
 
     if not os.path.exists(gpg_file):
-        print("Error: File %s doesn't exist." % gpg_file)
+        print(f"Error: File {gpg_file} doesn't exist.")
         exit(1)
 
     result = subprocess.run(['gpg', '--quiet', '--output', pwd_file, '--decrypt', gpg_file], stdout=subprocess.PIPE)
     if result.returncode == 0:
-        print("Decrypted: %s" % pwd_file)
+        print(f"Decrypted: {pwd_file}")
     else:
-        raise MyPwdError('Unable to decrypt file "%s".' % gpg_file)
+        raise MyPwdError(f'Unable to decrypt file "{gpg_file}".')
 
 
 def encrypt_vault(email: str) -> None:
     print("encrypting vault...")
     pwd_file = get_vault_path()
-    gpg_file = "%s.gpg" % pwd_file
-    bak_file = "%s.gpg.bak" % pwd_file
+    gpg_file = f"{pwd_file}.gpg"
+    bak_file = f"{pwd_file}.gpg.bak"
 
     if not os.path.exists(pwd_file):
-        print("Error: File %s doesn't exist." % pwd_file)
+        print(f"Error: File {pwd_file} doesn't exist.")
         exit(1)
 
     validate_vault_file(pwd_file)
@@ -166,10 +166,10 @@ def encrypt_vault(email: str) -> None:
         stdout=subprocess.PIPE,
     )
     if result.returncode == 0:
-        print("Encrypted: %s" % gpg_file)
+        print(f"Encrypted: {gpg_file}")
         os.remove(pwd_file)
     else:
-        raise MyPwdError('Unable to encrypt file "%s".' % pwd_file)
+        raise MyPwdError(f'Unable to encrypt file "{pwd_file}".')
 
     config = load_config()
     config[CONFIG_EMAIL_KEY] = email

@@ -29,7 +29,6 @@ def get_values(entry: str, keys: list) -> list:
 
     for key in keys:
         if key not in vault[entry]:
-            # raise MyPwdError('Key "%s" is missing in account "%s" in your "%s" file.' % (key, entry, impl.get_vault_path()))
             answer = input(f"{entry} -> {key}: ")
             vault[entry][key] = answer
             vault_modified = True
